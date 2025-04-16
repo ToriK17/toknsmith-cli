@@ -1,4 +1,4 @@
-# Toknsmith::Cli
+# Toknsmith::CLI
 
 TODO: Delete this and the text below, and describe your gem
 

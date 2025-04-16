@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 
-require "toknsmith/cli"
+require_relative "../lib/toknsmith/cli"
+Toknsmith::CLI.start(ARGV)

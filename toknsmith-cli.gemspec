@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/toknsmith/cli/version"
+require_relative "lib/toknsmith/version"
 
 Gem::Specification.new do |spec|
   spec.name = "toknsmith-cli"
