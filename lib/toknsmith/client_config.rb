@@ -1,3 +1,4 @@
+require_relative "keychain"
 require "yaml"
 
 module Toknsmith
@@ -14,8 +15,8 @@ module Toknsmith
     end
 
     def auth_token
-      token = `security find-generic-password -a auth_token -s toknsmith -w 2>/dev/null`.strip
-      raise "No auth token found. Please run `toknsmith-cli login`." if token.empty?
+      token = Toknsmith::Keychain.load
+      raise "No auth token found. Please run `toknsmith login`." if token.empty?
 
       token
     end
