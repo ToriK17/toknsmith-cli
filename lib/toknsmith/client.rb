@@ -27,5 +27,24 @@ module Toknsmith
         puts "Failed to authenticate. Status: #{response.code}"
       end
     end
+
+    def login(email, password)
+      response = HTTParty.post(
+        "#{@config.api_base}/api/v1/login",
+        headers: { "Content-Type" => "application/json" },
+        body: {
+          email: email,
+          password: password
+        }.to_json
+      )
+
+      case response.code
+      when 200
+        response["auth_token"]
+      else
+        puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
+        nil
+      end
+    end
   end
 end
