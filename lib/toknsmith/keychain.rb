@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require "shellwords"
 
 module Toknsmith
+  # Provides methods to save, load, and delete auth tokens in the macOS Keychain.
   class Keychain
     SERVICE = "toknsmith"
     ACCOUNT = "auth_token"

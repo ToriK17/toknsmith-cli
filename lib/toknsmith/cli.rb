@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require "thor"
 require_relative "client"
 require_relative "keychain"
 require_relative "client_config"
 
 module Toknsmith
+  # A command-line interface for logging in and saving tokens
   class CLI < Thor
     def self.exit_on_failure?
       true

@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require "httparty"
 require_relative "client_config"
+require "json"
 
 module Toknsmith
+  # Handles API interactions including authentication and identity verification.
   class Client
     def initialize
       @config = ClientConfig.new
