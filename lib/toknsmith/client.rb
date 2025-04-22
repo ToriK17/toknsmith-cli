@@ -33,8 +33,10 @@ module Toknsmith
         "#{@config.api_base}/api/v1/login",
         headers: { "Content-Type" => "application/json" },
         body: {
-          email: email,
-          password: password
+          session: {
+            email: email,
+            password: password
+          }
         }.to_json
       )
 
