@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require_relative "keychain"
 require "yaml"
 
 module Toknsmith
+  # Loads CLI configuration from the user's home directory and retrieves stored auth tokens.
   class ClientConfig
     CONFIG_PATH = File.join(Dir.home, ".toknsmith", "config")
 

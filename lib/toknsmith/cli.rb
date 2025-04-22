@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require "thor"
 require_relative "client"
 require_relative "keychain"
 require_relative "client_config"
-
+require "io/console"
 module Toknsmith
+  # A command-line interface for logging in and saving tokens
   class CLI < Thor
     def self.exit_on_failure?
       true
@@ -17,10 +20,26 @@ module Toknsmith
       puts "Error: #{e.message}"
     end
 
-    desc "login TOKEN", "Store your auth token securely in macOS keychain"
-    def login(token)
-      Keychain.save(token)
-      puts "✅ Token saved securely to Keychain!"
+    desc "login", "Log in with your email and password to receive an auth token"
+    def login
+      print "Email: "
+      email = $stdin.gets.strip
+
+      print "Password: "
+      password = $stdin.noecho(&:gets).strip
+      puts "\nLogging in..."
+
+      client = Client.new
+      auth_token = client.login(email, password)
+
+      if auth_token
+        Keychain.save(auth_token)
+        puts "✅ Logged in and token saved to Keychain!"
+      else
+        puts "❌ Login failed. Please check your credentials."
+      end
+    rescue StandardError => e
+      puts "Error during login: #{e.message}"
     end
   end
 end
