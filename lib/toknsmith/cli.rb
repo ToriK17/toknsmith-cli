@@ -41,5 +41,16 @@ module Toknsmith
     rescue StandardError => e
       puts "Error during login: #{e.message}"
     end
+
+    desc "logout", "Remove your stored auth token from local keychain"
+    def logout
+      if Keychain.clear
+        puts "👋 Logged out. Token removed from Keychain."
+      else
+        puts "⚠️ No token found in Keychain."
+      end
+    rescue StandardError => e
+      puts "Error during logout: #{e.message}"
+    end
   end
 end

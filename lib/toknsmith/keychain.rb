@@ -19,5 +19,9 @@ module Toknsmith
     def self.delete
       system("security delete-generic-password -a #{ACCOUNT} -s #{SERVICE} 2>/dev/null")
     end
+
+    def self.clear
+      system("security delete-generic-password -s toknsmith -a auth_token >/dev/null 2>&1")
+    end
   end
 end
