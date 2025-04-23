@@ -48,5 +48,24 @@ module Toknsmith
         nil
       end
     end
+
+    def logout
+      response = HTTParty.delete(
+        "#{@config.api_base}/api/v1/logout",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        }
+      )
+
+      case response.code
+      when 200
+        puts "✅ Token revoked remotely."
+      when 401
+        puts "⚠️ Token already revoked or invalid."
+      else
+        puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
+      end
+    end
   end
 end

@@ -42,10 +42,13 @@ module Toknsmith
       puts "Error during login: #{e.message}"
     end
 
-    desc "logout", "Remove your stored auth token from local keychain"
+    desc "logout", "Revoke your auth token and remove it from local keychain"
     def logout
+      client = Client.new
+      client.logout
+
       if Keychain.clear
-        puts "👋 Logged out. Token removed from Keychain."
+        puts "👋 Logged out locally. Token removed from Keychain."
       else
         puts "⚠️ No token found in Keychain."
       end
