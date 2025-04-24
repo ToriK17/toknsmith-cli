@@ -1,39 +1,77 @@
-# Toknsmith::CLI
+# Toknsmith::CLI 🗝️
+> A minimal, secure CLI for storing and rotating tokens — so you can stop dreading secret management.
 
-TODO: Delete this and the text below, and describe your gem
+## 🚀 Why This Exists
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/toknsmith/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
+Every team I’ve worked on has treated token rotation like it’s jury duty.  
+We even tried calling it “**Tokenpalooza**” to make it fun. It wasn’t.
 
-## Installation
+So I built `toknsmith` — a CLI-first tool that helps you manage sensitive tokens *securely*, *reliably*, and *without hating your life*.
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+## ✅ What It Does (Today)
 
-Install the gem and add to the application's Gemfile by executing:
+- 🔐 `toknsmith login` – Authenticate via CLI and store your session token in macOS Keychain
+- 👤 `toknsmith whoami` – Identify the current user (verifies token)
+- 🚪 `toknsmith logout` – Revoke your token locally *and* via the API
+- 📦 `toknsmith tokens store github` – Store external tokens (like GitHub PATs) with optional notes and expiry metadata
+- ⚙️ CLI powered by Thor and built for extension
+- 🌐 Fully authenticated API interactions (Bearer + HTTPS)
+- 🔒 No secrets ever stored in plain text, anywhere
+
+## 🧠 How It Works
+
+- CLI token is stored in the **macOS Keychain** (Linux & Windows support coming soon)
+- API tokens are encrypted **on write** using Rails credentials
+- All sessions are scoped, tracked, and revocable
+- You control your secrets. We don’t see them. Ever.
+
+## 🛣️ What’s Coming
+
+- ⏳ `--expires-in 30d` style TTLs with automatic cleanup
+- 📝 Notes & tags per token for context
+- 🔁 CLI token rotation support
+- 🔌 GitHub OAuth integration
+- 🧠 Fine-grained PAT issuance via CLI
+- 📡 Webhook-based rotation events
+- 📊 Dashboard for team-wide visibility (long-term vision)
+
+## 📦 Install Locally
+
+_Coming soon via RubyGems — for now:_
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+git clone https://github.com/yourhandle/toknsmith-cli.git
+cd toknsmith-cli
+bundle install
+bundle exec rake install
 ```
+🔐 You’ll need an API token to get started. Reach out to request access.
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+## 🛠️ Usage
 
-```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-```
+toknsmith login
+# → Authenticate and store token in Keychain
 
-## Usage
+toknsmith whoami
+# → Confirm your identity with the server
 
-TODO: Write usage instructions here
+toknsmith logout
+# → Wipe token from Keychain + revoke remotely
 
-## Development
+toknsmith tokens store github \
+  --token ghp_abcdef123456 \
+  --note "CI deploy key" \
+  --expires-in 30d
+# → Store a GitHub token with metadata
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## 🔒 Security Notes
+- Tokens are persisted using the native macOS Keychain, encrypted at rest by the system, and never stored in plaintext.
+_support for Linux and Windows in the future_
+- External tokens (like GitHub PATs) are encrypted-at-rest using AES-GCM
+- CLI uses Bearer Auth over HTTPS for all requests
+- Logs are filtered, secrets are wiped from memory after use
+- This CLI assumes zero trust, zero plaintext, and zero nonsense.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/toknsmith-cli.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+## 📜 License & IP
+This project was developed independently and is not affiliated with any current or former employer.
+All code, documentation, and design is © Kernels & Bits 2025 and released under the [MIT License](https://opensource.org/licenses/MIT).

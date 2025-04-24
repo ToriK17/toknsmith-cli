@@ -3,6 +3,7 @@
 require "thor"
 require_relative "client"
 require_relative "keychain"
+require_relative "Tokens"
 require_relative "client_config"
 require "io/console"
 module Toknsmith
@@ -55,5 +56,8 @@ module Toknsmith
     rescue StandardError => e
       puts "Error during logout: #{e.message}"
     end
+
+    desc "tokens SUBCOMMAND ...ARGS", "Token-related operations"
+    subcommand "tokens", Tokens
   end
 end

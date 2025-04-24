@@ -67,5 +67,37 @@ module Toknsmith
         puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
       end
     end
+
+    def store_token(service_name, token_value, note = nil, expires_in = nil)
+      body = {
+        service_name: service_name,
+        token_value: token_value,
+        note: note,
+        expires_in: expires_in
+      }.compact
+
+      post_token(body)
+    end
+
+    private
+
+    def post_token(body)
+      response = HTTParty.post(
+        "#{@config.api_base}/api/v1/tokens",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        },
+        body: body.to_json
+      )
+
+      case response.code
+      when 201
+        response.parsed_response
+      else
+        puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
+        nil
+      end
+    end
   end
 end
