@@ -49,20 +49,21 @@ bundle exec rake install
 
 ## 🛠️ Usage
 
-toknsmith login
-# → Authenticate and store token in Keychain
+`toknsmith login`
+- Authenticate and store token in Keychain
 
-toknsmith whoami
-# → Confirm your identity with the server
+`toknsmith whoami`
+- Confirm your identity with the server
 
-toknsmith logout
-# → Wipe token from Keychain + revoke remotely
+`toknsmith logout`
+- Wipe token from Keychain + revoke remotely
 
-toknsmith tokens store github \
+```toknsmith tokens store github \
   --token ghp_abcdef123456 \
   --note "CI deploy key" \
   --expires-in 30d
-# → Store a GitHub token with metadata
+```
+- Store a GitHub token with metadata
 
 ## 🔒 Security Notes
 - Tokens are persisted using the native macOS Keychain, encrypted at rest by the system, and never stored in plaintext.
