@@ -1,4 +1,5 @@
 # Toknsmith::CLI 🗝️
+[![Last Commit](https://img.shields.io/github/last-commit/ToriK17/toknsmith-cli)](https://github.com/ToriK17/toknsmith-cli)
 > A minimal, secure CLI for storing and rotating tokens — so you can stop dreading secret management.
 
 ## 🚀 Why This Exists
