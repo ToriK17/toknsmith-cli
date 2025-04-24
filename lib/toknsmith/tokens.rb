@@ -24,6 +24,24 @@ module Toknsmith
       puts "Error: #{e.message}"
     end
 
+    desc "list", "List stored tokens for your team"
+    def list
+      client = Client.new
+      tokens = client.list_tokens
+
+      if tokens.any?
+        puts "🔐 Stored Tokens:"
+        puts "ID\tService\t\tExpires\t\t\tNote"
+        tokens.each do |t|
+          puts "#{t["id"]}\t#{t["service_name"]}\t#{t["expires_at"] || "Never"}\t#{t["note"] || "-"}"
+        end
+      else
+        puts "😴 No tokens stored yet."
+      end
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+    end
+
     private
 
     def print_token_result(service, response)
