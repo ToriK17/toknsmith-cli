@@ -58,7 +58,8 @@ bundle exec rake install
 `toknsmith logout`
 - Wipe token from Keychain + revoke remotely
 
-```toknsmith tokens store github \
+```
+toknsmith tokens store github \
   --token ghp_abcdef123456 \
   --note "CI deploy key" \
   --expires-in 30d
