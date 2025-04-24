@@ -79,6 +79,24 @@ module Toknsmith
       post_token(body)
     end
 
+    def list_tokens
+      response = HTTParty.get(
+        "#{@config.api_base}/api/v1/tokens",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        }
+      )
+
+      case response.code
+      when 200
+        response.parsed_response
+      else
+        puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
+        []
+      end
+    end
+
     private
 
     def post_token(body)
