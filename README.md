@@ -4,8 +4,7 @@
 
 ## 🚀 Why This Exists
 
-Every team I’ve worked on has treated token rotation like it’s jury duty.  
-We even tried calling it “**Tokenpalooza**” to make it fun. It wasn’t.
+Every team I’ve worked on has treated token rotation like it’s jury duty. It's never fun, it's never fast. 
 
 So I built `toknsmith` — a CLI-first tool that helps you manage sensitive tokens *securely*, *reliably*, and *without hating your life*.
 
