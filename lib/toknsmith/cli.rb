@@ -4,6 +4,7 @@ require "thor"
 require_relative "client"
 require_relative "keychain"
 require_relative "Tokens"
+require_relative "Oauth"
 require_relative "client_config"
 require "io/console"
 module Toknsmith
@@ -59,5 +60,8 @@ module Toknsmith
 
     desc "tokens SUBCOMMAND ...ARGS", "Token-related operations"
     subcommand "tokens", Tokens
+
+    desc "oauth SUBCOMMAND ...ARGS", "OAuth provider operations"
+    subcommand "oauth", Oauth
   end
 end

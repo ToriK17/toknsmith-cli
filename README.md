@@ -51,6 +51,7 @@ bundle exec rake install
 
 `toknsmith login`
 - Authenticate and store token in Keychain
+- See your token in the macOS keychain with `security find-generic-password -s toknsmith -a auth_token -w`
 
 `toknsmith whoami`
 - Confirm your identity with the server

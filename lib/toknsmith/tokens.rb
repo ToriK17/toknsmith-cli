@@ -2,6 +2,7 @@
 
 require "thor"
 require_relative "client"
+require "dotenv/load"
 
 module Toknsmith
   # Handles CLI token storage for external services (e.g., GitHub)
@@ -40,6 +41,44 @@ module Toknsmith
       end
     rescue StandardError => e
       puts "Error: #{e.message}"
+    end
+
+    desc "connect SERVICE", "Initiate OAuth connection for a service (e.g. github)"
+    def connect(service)
+      client = Client.new
+      auth_token = client.auth_token
+      unless auth_token
+        puts "❌ No auth token found. Please login first with `toknsmith login`."
+        return
+      end
+
+      case service
+      when "github"
+        redirect_uri = "http://localhost:7071/api/github-callback"
+        query = URI.encode_www_form(
+          client_secret: ENV.fetch("GITHUB_CLIENT_SECRET", nil),
+          client_id: ENV.fetch("GITHUB_CLIENT_ID", nil),
+          redirect_uri: redirect_uri,
+          state: "toknsmith:#{auth_token}"
+        )
+        oauth_url = "http://localhost:7071/api/github-authorize?#{query}"
+
+        puts "🌐 Open this URL to connect your GitHub account:"
+        puts oauth_url
+        # Optional: auto-open browser
+        case RbConfig::CONFIG["host_os"]
+        when /darwin|mac os/
+          system("open", oauth_url)
+        when /linux/
+          system("xdg-open", oauth_url)
+        when /mswin|mingw|cygwin/
+          system("start", oauth_url)
+        end
+      else
+        puts "⚠️ Service not yet supported: #{service}"
+      end
+    rescue StandardError => e
+      puts "Error starting OAuth flow: #{e.message}"
     end
 
     private
