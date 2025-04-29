@@ -97,7 +97,29 @@ module Toknsmith
         body: body.to_json
       )
 
-      response.code == 201
+      if response.success?
+        true
+      else
+        puts "Error saving OAuth config: #{response.parsed_response["error"] || response.parsed_response || "Unknown error"}"
+        false
+      end
+    end
+
+    def fetch_oauth_config(service)
+      response = HTTParty.get(
+        "#{@config.api_base}/api/v1/oauth_configs/#{service}",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        }
+      )
+
+      if response.code == 200
+        response.parsed_response
+      else
+        puts "Error fetching OAuth config: #{response.parsed_response["error"] || "Unknown error"}"
+        nil
+      end
     end
 
     def auth_token
