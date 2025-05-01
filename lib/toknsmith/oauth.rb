@@ -23,7 +23,7 @@ module Toknsmith
       client_secret = $stdin.noecho(&:gets).strip
       puts "\nSubmitting credentials..."
 
-      if client_secret.empty?
+      if client_secret.strip.empty?
         puts "❌ Client Secret cannot be blank!"
         return
       end

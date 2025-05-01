@@ -14,28 +14,29 @@ So I built `toknsmith` — a CLI-first tool that helps you manage sensitive toke
 - 👤 `toknsmith whoami` – Identify the current user (verifies token)
 - 🚪 `toknsmith logout` – Revoke your token locally *and* via the API
 - 📦 `toknsmith tokens store github` – Store external tokens (like GitHub PATs) with optional notes and expiry metadata
-- ⚙️ CLI powered by Thor and built for extension
-- 🌐 Fully authenticated API interactions (Bearer + HTTPS)
-- 🔒 No secrets ever stored in plain text, anywhere
+- 🔧 `toknsmith oauth configure github` — Set up GitHub OAuth credentials securely via CLI
+- ⚙️ CLI powered by [Thor](https://github.com/rails/thor) — clean commands, easy extensions
+- 🌐 Authenticated API interactions — Bearer Token + HTTPS
+- 🔒 Zero secrets stored plaintext. Ever.
 
 ## 🧠 How It Works
 
 - CLI token is stored in the **macOS Keychain** (Linux & Windows support coming soon)
-- API tokens are encrypted **on write** using Rails credentials
-- All sessions are scoped, tracked, and revocable
-- You control your secrets. We don’t see them. Ever.
+- Tokens are encrypted-at-rest using strong authenticated encryption standards before being transmitted.
+- OAuth client secrets are vaulted separately via external encryptors (not stored directly)
+- All sessions are fully scoped, session-based, and revocable at any time
 
 ## 🛣️ What’s Coming
 
-- ⏳ `--expires-in 30d` style TTLs with automatic cleanup
-- 📝 Notes & tags per token for context
-- 🔁 CLI token rotation support
-- 🔌 GitHub OAuth integration
+- ⏳ `--expires-in 30d` style token TTLs + automatic cleanup
+- 📝 Notes and tags for smarter token management
+- 🔁 OAuth token rotation support via CLI
+- 🔌 OAuth integrations (starting with GitHub, expanding)
 - 🧠 Fine-grained PAT issuance via CLI
 - 📡 Webhook-based rotation events
-- 📊 Dashboard for team-wide visibility (long-term vision)
+- 📊 Admin Dashboard for team token visibility (long-term vision)
 
-## 📦 Install Locally
+## 📦 Install Toknsmith Locally
 
 _Coming soon via RubyGems — for now:_
 
@@ -49,15 +50,23 @@ bundle exec rake install
 
 ## 🛠️ Usage
 
+### Authenticate:
+
 `toknsmith login`
 - Authenticate and store token in Keychain
 - See your token in the macOS keychain with `security find-generic-password -s toknsmith -a auth_token -w`
 
+### Check current session:
+
 `toknsmith whoami`
 - Confirm your identity with the server
 
+### Logout securely:
+
 `toknsmith logout`
 - Wipe token from Keychain + revoke remotely
+
+### Store a GitHub Personal Access Token (PAT):
 
 ```
 toknsmith tokens store github \
@@ -67,14 +76,19 @@ toknsmith tokens store github \
 ```
 - Store a GitHub token with metadata
 
+### Configure GitHub OAuth App credentials:
+
+`toknsmith oauth configure github`
+
 ## 🔒 Security Notes
-- Tokens are persisted using the native macOS Keychain, encrypted at rest by the system, and never stored in plaintext.
+- Auth token is persisted using the native macOS Keychain, encrypted at rest by the system, and never stored in plaintext.
 _support for Linux and Windows in the future_
-- External tokens (like GitHub PATs) are encrypted-at-rest using AES-GCM
+- External tokens (like GitHub PATs) are encrypted-at-rest with a server side algorithm
 - CLI uses Bearer Auth over HTTPS for all requests
-- Logs are filtered, secrets are wiped from memory after use
-- This CLI assumes zero trust, zero plaintext, and zero nonsense.
+- No plaintext secrets written to disk, memory, logs, or network
+- CLI treats every operation with a zero-trust mentality: verify everything, assume nothing
+- Coming soon: external key encryption for maximum split-trust security
 
 ## 📜 License & IP
-This project was developed independently and is not affiliated with any current or former employer.
+This project was built independently with no employer affiliation.
 All code, documentation, and design is © Kernels & Bits 2025 and released under the [MIT License](https://opensource.org/licenses/MIT).

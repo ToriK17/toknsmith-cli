@@ -100,7 +100,8 @@ module Toknsmith
       if response.success?
         true
       else
-        puts "Error saving OAuth config: #{response.parsed_response["error"] || response.parsed_response || "Unknown error"}"
+        error = response.parsed_response["error"] || response.parsed_response || "Unknown error"
+        puts "Error saving OAuth config: #{error}"
         false
       end
     end
