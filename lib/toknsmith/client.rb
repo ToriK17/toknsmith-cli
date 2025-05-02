@@ -79,6 +79,54 @@ module Toknsmith
       post_token(body)
     end
 
+    def configure_oauth_provider(provider, client_id, client_secret)
+      body = {
+        oauth_config: {
+          provider_name: provider,
+          client_id: client_id,
+          client_secret: client_secret
+        }
+      }
+
+      response = HTTParty.post(
+        "#{@config.api_base}/api/v1/oauth_configs",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        },
+        body: body.to_json
+      )
+
+      if response.success?
+        true
+      else
+        error = response.parsed_response["error"] || response.parsed_response || "Unknown error"
+        puts "Error saving OAuth config: #{error}"
+        false
+      end
+    end
+
+    def fetch_oauth_config(service)
+      response = HTTParty.get(
+        "#{@config.api_base}/api/v1/oauth_configs/#{service}",
+        headers: {
+          "Authorization" => "Bearer #{@config.auth_token}",
+          "Content-Type" => "application/json"
+        }
+      )
+
+      if response.code == 200
+        response.parsed_response
+      else
+        puts "Error fetching OAuth config: #{response.parsed_response["error"] || "Unknown error"}"
+        nil
+      end
+    end
+
+    def auth_token
+      @config.auth_token
+    end
+
     def list_tokens
       response = HTTParty.get(
         "#{@config.api_base}/api/v1/tokens",
