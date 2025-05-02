@@ -91,4 +91,4 @@ _support for Linux and Windows in the future_
 
 ## 📜 License & IP
 This project was built independently with no employer affiliation.
-All code, documentation, and design is © Kernels & Bits 2025 and released under the [MIT License](https://opensource.org/licenses/MIT).
+All code, documentation, and design is © Kernels & Bits LLC 2025 and released under the [MIT License](https://opensource.org/licenses/MIT).
