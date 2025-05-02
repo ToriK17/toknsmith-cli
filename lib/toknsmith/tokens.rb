@@ -5,7 +5,7 @@ require_relative "client"
 require "dotenv/load"
 
 module Toknsmith
-  # Handles CLI token storage for external services (e.g., GitHub)
+  # Handles CLI token storage for external services (e.g., GitHub, GitLab, etc.)
   class Tokens < Thor
     desc "store SERVICE", "Store a token for a given service"
     option :token, required: true, aliases: "-t", desc: "The actual token value"
@@ -14,7 +14,7 @@ module Toknsmith
 
     def store(service)
       client = Client.new
-      response = client.store_token(service, options[:token], options[:note], options[:expires_in])
+      response = client.store_service_token(service, options[:token], options[:note], options[:expires_in])
 
       if response
         print_token_result(service, response)
@@ -28,7 +28,7 @@ module Toknsmith
     desc "list", "List stored tokens for your team"
     def list
       client = Client.new
-      tokens = client.list_tokens
+      tokens = client.list_service_tokens
 
       if tokens.any?
         puts "🔐 Stored Tokens:"

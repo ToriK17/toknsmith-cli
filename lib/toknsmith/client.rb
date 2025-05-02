@@ -68,7 +68,7 @@ module Toknsmith
       end
     end
 
-    def store_token(service_name, token_value, note = nil, expires_in = nil)
+    def store_service_token(service_name, token_value, note = nil, expires_in = nil)
       body = {
         service_name: service_name,
         token_value: token_value,
@@ -76,7 +76,7 @@ module Toknsmith
         expires_in: expires_in
       }.compact
 
-      post_token(body)
+      post_service_token(body)
     end
 
     def configure_oauth_provider(provider, client_id, client_secret)
@@ -127,9 +127,9 @@ module Toknsmith
       @config.auth_token
     end
 
-    def list_tokens
+    def list_service_tokens
       response = HTTParty.get(
-        "#{@config.api_base}/api/v1/tokens",
+        "#{@config.api_base}/api/v1/service_tokens",
         headers: {
           "Authorization" => "Bearer #{@config.auth_token}",
           "Content-Type" => "application/json"
@@ -138,7 +138,9 @@ module Toknsmith
 
       case response.code
       when 200
-        response.parsed_response
+        tokens = response.parsed_response
+        puts "No service tokens found for your team." if tokens.empty?
+        tokens
       else
         puts "Error: #{response.parsed_response["error"] || "Unknown error"}"
         []
@@ -147,9 +149,9 @@ module Toknsmith
 
     private
 
-    def post_token(body)
+    def post_service_token(body)
       response = HTTParty.post(
-        "#{@config.api_base}/api/v1/tokens",
+        "#{@config.api_base}/api/v1/service_tokens",
         headers: {
           "Authorization" => "Bearer #{@config.auth_token}",
           "Content-Type" => "application/json"
