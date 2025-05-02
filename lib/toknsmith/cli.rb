@@ -3,8 +3,9 @@
 require "thor"
 require_relative "client"
 require_relative "keychain"
-require_relative "Tokens"
-require_relative "Oauth"
+require_relative "tokens"
+require_relative "service_tokens"
+require_relative "oauth_tokens"
 require_relative "client_config"
 require "io/console"
 module Toknsmith
@@ -36,7 +37,7 @@ module Toknsmith
 
       if auth_token
         Keychain.save(auth_token)
-        puts "✅ Logged in and token saved to Keychain!"
+        puts "✅ Logged in and auth token saved to Keychain!"
       else
         puts "❌ Login failed. Please check your credentials."
       end
@@ -50,9 +51,9 @@ module Toknsmith
       client.logout
 
       if Keychain.clear
-        puts "👋 Logged out locally. Token removed from Keychain."
+        puts "👋 Logged out locally. Auth token removed from Keychain."
       else
-        puts "⚠️ No token found in Keychain."
+        puts "⚠️ No auth token found in Keychain."
       end
     rescue StandardError => e
       puts "Error during logout: #{e.message}"
@@ -62,6 +63,6 @@ module Toknsmith
     subcommand "tokens", Tokens
 
     desc "oauth SUBCOMMAND ...ARGS", "OAuth provider operations"
-    subcommand "oauth", Oauth
+    subcommand "oauth", OauthTokens
   end
 end
