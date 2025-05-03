@@ -68,7 +68,7 @@ bundle exec rake install
 `toknsmith logout`
 - Wipe token from Keychain + revoke remotely
 
-### Store a GitHub Personal Access Token (PAT):
+### Store a Service Token (e.g. GitHub PAT):
 
 ```
 toknsmith tokens store github \
@@ -76,11 +76,20 @@ toknsmith tokens store github \
   --note "CI deploy key" \
   --expires-in 30d
 ```
-- Store a GitHub token with metadata
+- Vaults a token for future automation use
+- Metadata helps track usage, purpose, and lifecycle
 
-### Configure GitHub OAuth App credentials:
+### Configure an OAuth App:
 
 `toknsmith oauth configure github`
+- Securely store your GitHub OAuth App's client ID and client secret
+- These values are encrypted and stored via external middleware — the API never sees plaintext
+
+### Initiate GitHub OAuth Flow:
+`toknsmith oauth connect github`
+- Opens a browser window to begin OAuth authorization
+- After approval, vaults the access token securel
+- Ideal for setting up GitHub org-level access
 
 ## 🔒 Security Notes
 - Auth token is persisted using the native macOS Keychain, encrypted at rest by the system, and never stored in plaintext.
