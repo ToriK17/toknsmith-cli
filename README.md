@@ -15,7 +15,7 @@ So I built `toknsmith` — a CLI-first tool that helps you manage sensitive toke
 - 🚪 `toknsmith logout` – Revoke your token locally *and* via the API
 - 📦 `toknsmith tokens store github` – Store external tokens (like GitHub PATs) with optional notes and expiry metadata
 - 🔧 `toknsmith oauth configure github` — Kick off the GitHub OAuth browser flow and vault the access token automatically
-- 🌐 toknsmith oauth connect github – Launch the GitHub OAuth flow, approve access, and vault a live OAuth token automatically
+- 🌐 `toknsmith oauth connect github` – Launch the GitHub OAuth flow, approve access, and vault a live OAuth token automatically
 - 🔄 Token encryption & decryption powered by external middleware (zero secret handling inside the API)
 - 🔒 CLI, API, and middleware work together in a zero-trust, split-responsibility model
 - ⚙️ CLI powered by [Thor](https://github.com/rails/thor) — clean commands, easy extensions
