@@ -5,7 +5,7 @@ require_relative "client"
 
 module Toknsmith
   # Handles OAuth provider configurations
-  class Oauth < Thor
+  class OauthTokens < Thor
     desc "configure PROVIDER", "Configure OAuth credentials for a service (e.g. github)"
     def configure(provider)
       client = Client.new
