@@ -6,7 +6,7 @@
 
 Every team I’ve worked on has treated token rotation like it’s jury duty. It's never fun, it's never fast. 
 
-So I built `toknsmith` — a CLI-first tool that helps you manage sensitive tokens *securely*, *reliably*, and *without hating your life*.
+So I built `toknsmith`, a CLI-first tool that helps you manage sensitive tokens *securely*, *reliably*, and *without hating your life*.
 
 ## ✅ What It Does (Today)
 
