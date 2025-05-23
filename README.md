@@ -72,7 +72,7 @@ bundle exec rake install
 ### Store a Service Token (e.g. GitHub PAT):
 
 ```
-toknsmith tokens store github \
+toknsmith tokens service store github \
   --token ghp_abcdef123456 \
   --note "CI deploy key" \
   --expires-in 30d
@@ -84,12 +84,12 @@ toknsmith tokens store github \
 
 `toknsmith oauth configure github`
 - Securely store your GitHub OAuth App's client ID and client secret
-- These values are encrypted and stored via external middleware — the API never sees plaintext
+- These values are encrypted and stored via external middleware — the API never sees plain text
 
 ### Initiate GitHub OAuth Flow:
 `toknsmith oauth connect github`
 - Opens a browser window to begin OAuth authorization
-- After approval, vaults the access token securel
+- After approval, vaults the access token securely
 - Ideal for setting up GitHub org-level access
 
 ## 🔒 Security Notes
